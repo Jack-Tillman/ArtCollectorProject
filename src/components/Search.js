@@ -11,9 +11,15 @@ import {
 
 const Search = (props) => {
   // Make sure to destructure setIsLoading and setSearchResults from the props
-
-
-  /**
+  const { setIsLoading, setSearchResults } = props;
+  const [inputValue, setInputValue] = useState();
+  const [centuryList, setCenturyList] = useState([]);
+  const [classificationList, setClassificationList] = useState([]);
+  const [queryString, setQueryString] = useState("");
+  const [century, setCentury] = useState('any');
+  const [classification, setClassification] = useState('any');
+  /* 
+   * 
    * We are at the Search component, a child of app. This has a form, so we need to use useState for
    * our controlled inputs:
    * 
@@ -32,8 +38,19 @@ const Search = (props) => {
    * 
    * Make sure to console.error on caught errors from the API methods.
    */
-  useEffect(() => {
 
+  /* Jack edit: maybe try this 
+  try {
+    const [
+      classifications, centuries
+    ] = await Promise.all([
+      fetchAllClassifications(),
+      fetchAllCenturies()
+  */
+
+  useEffect(() => {
+    Promise.all([fetchAllCenturies, fetchAllClassifications]).then((setCenturyList(fetchAllCenturies), setClassificationList)) 
+    
   }, []);
 
   /**
@@ -61,18 +78,25 @@ const Search = (props) => {
         id="keywords" 
         type="text" 
         placeholder="enter keywords..." 
-        value={/* this should be the query string */} 
-        onChange={/* this should update the value of the query string */}/>
+         value={queryString} 
+        onChange={setQueryString}
+        />
     </fieldset>
     <fieldset>
       <label htmlFor="select-classification">Classification <span className="classification-count">({ classificationList.length })</span></label>
       <select 
         name="classification"
         id="select-classification"
-        value={/* this should be the classification */} 
-        onChange={/* this should update the value of the classification */}>
+        value={classification} 
+        onChange={setClassification}
+        >
         <option value="any">Any</option>
-        {/* map over the classificationList, return an <option /> */}
+        {/* map over the classificationList, return an <option /> */
+        /*if there are any issues with this, on line 89, include other properties from https://github.com/harvardartmuseums/api-docs/blob/master/sections/classification.md */
+         classificationList.map(option => {
+          return <option key={option.id} />
+        })}
+       
       </select>
     </fieldset>
     <fieldset>
@@ -80,10 +104,16 @@ const Search = (props) => {
       <select 
         name="century" 
         id="select-century"
-        value={/* this should be the century */} 
-        onChange={/* this should update the value of the century */}>
+        value={century} 
+        onChange={setCentury}
+        >
         <option value="any">Any</option>
-        {/* map over the centuryList, return an <option /> */}
+        {/* map over the centuryList, return an <option /> 
+        if there are any issues with this, on line 106, include other properties from https://github.com/harvardartmuseums/api-docs/blob/master/sections/century.md */
+        centuryList.map(option => {
+          return <option key={option.id} />
+        })}
+        
       </select>
      </fieldset>
     <button>SEARCH</button>
@@ -91,3 +121,7 @@ const Search = (props) => {
 }
 
 export default Search;
+
+/*
+
+*/

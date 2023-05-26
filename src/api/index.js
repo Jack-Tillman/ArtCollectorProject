@@ -43,7 +43,7 @@ export async function fetchQueryResults({
   century,
   classification,
   queryString,
-}) {
+}) {  
   const url = `${ BASE_URL }/object?${ KEY }&classification=${ classification }&century=${ 
     century }&keyword=${ queryString }`;
 
