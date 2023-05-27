@@ -39,18 +39,18 @@ const Search = (props) => {
    * Make sure to console.error on caught errors from the API methods.
    */
 
-  /* Jack edit: maybe try this 
-  try {
-    const [
-      classifications, centuries
-    ] = await Promise.all([
-      fetchAllClassifications(),
-      fetchAllCenturies()
-  */
-
   useEffect(() => {
-    Promise.all([fetchAllCenturies, fetchAllClassifications]).then((setCenturyList(fetchAllCenturies), setClassificationList)) 
-    
+    Promise.all([
+      fetchAllCenturies(),
+      fetchAllClassifications()
+    ])
+    .then(([resCenturies, resClassifications]) => {
+      setCenturyList(resCenturies);
+      setClassificationList(resClassifications)
+    })
+    .catch((error) => {
+      console.error(error)
+    })
   }, []);
 
   /**
@@ -122,6 +122,35 @@ const Search = (props) => {
 
 export default Search;
 
+
+useEffect(() => {
+  let promises = [];
+  data.forEach((item) => {
+    promises.push(
+      fetch(
+        `https://app.subsocial.network/subid/api/v1/check/${item.name.toLowerCase()}`
+      )
+    );
+  });
+
+  Promise.all(promises)
+    .then((responses) => {
+      // Take all responses and analyze them with another Promise.all
+      return Promise.all(
+        responses.map((response) => {
+          return response.json();
+        })
+      );
+    })
+    .then((data) => {
+      // Extracted data
+      console.log(data);
+    })
+    .catch((error) => {
+      // Catched errors
+      console.log(error);
+    });
+}, [data]);
 /*
 
 */

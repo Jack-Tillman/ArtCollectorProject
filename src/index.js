@@ -5,7 +5,7 @@ import {
   // Feature,
   Loading,
   // Preview,
-  // Search,
+  Search,
   Title
 } from './components'; 
 // Kaleb commented line 4-12 out
@@ -22,13 +22,13 @@ const App = () => {
    * isLoading, setIsLoading (default should be false)
    */
   
-  // const searchResults = {info: '{}', records: '[]'};
   const [ searchResults, setSearchResults ] = useState({info:{}, records:[]});
   const [ featuredResult, setFeaturedResult ] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   return <div className="app">
 
-    {/* <Search setIsLoading={isLoading} setSearchResults={searchResults} />
+    <Search setIsLoading={isLoading} setSearchResults={searchResults} />
+    {/*
     <Preview searchResults={searchResults} setIsLoading={isLoading} setSearchResults={searchResults} setFeaturedResult={featuredResult}/>
     <Feature featuredResult={featuredResult} setIsLoading={isLoading} setSearchResults={searchResults} /> */}
     <Loading isLoading={isLoading} />
