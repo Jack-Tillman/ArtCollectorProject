@@ -9,7 +9,7 @@ import {
   Title
 } from './components'; 
 // Kaleb commented line 4-12 out
-//Jack uncommented line 6 and 9 out 
+//Jack uncommented line 6 and 9 out - 05/27/23
 //uncomment out the above import statements as we finish each component, as well as the actual components themselves rendered down below
 
 const App = () => {
@@ -25,19 +25,19 @@ const App = () => {
   const [ searchResults, setSearchResults ] = useState({info:{}, records:[]});
   const [ featuredResult, setFeaturedResult ] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  return <div className="app">
+  return (<div className="app">
 
-    <Search setIsLoading={isLoading} setSearchResults={searchResults} />
-    {/*
+    <Title /> 
+    <Search 
+    setIsLoading={isLoading} 
+    setSearchResults={searchResults}
+     />
+    {/* Commented out by Jack on 05/27/23 to prevent errors. Uncommented out when we finish these components
     <Preview searchResults={searchResults} setIsLoading={isLoading} setSearchResults={searchResults} setFeaturedResult={featuredResult}/>
     <Feature featuredResult={featuredResult} setIsLoading={isLoading} setSearchResults={searchResults} /> */}
     <Loading isLoading={isLoading} />
-  
-
-
-
+    
     {/* <Title /> is static, doesn't need any props*/
-     <Title /> 
     /*{/* <Search /> needs props for setIsLoading and setSearchResults (trigger <Loading /> on search start/end, and transfer results to preview) */} 
     {/* <Search /> 
     {/* <Preview /> needs props for searchResults, setIsLoading and setSearchResults (clicking prev/next buttons), and setFeaturedResult (clicking a preview) */}
@@ -47,8 +47,8 @@ const App = () => {
     {/* <Loading />  */}
     {/* is static, but should only render when isLoading is true */}
     {/* <Loading /> use a ternary and render null if isLoading is false */}
-  
-  </div>
+
+  </div>)
 }
 
 /**
