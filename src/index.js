@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import Search from './components/Search';
 // These imports won't work until you fix ./components/index.js
-// import {
-//   Feature,
-//   Loading,
-//   Preview,
-//   Search,
-//   Title
-// } from './components'; 
+import {
+  // Feature,
+  Loading,
+  // Preview,
+  // Search,
+  Title
+} from './components'; 
 // Kaleb commented line 4-12 out
+//Jack uncommented line 6 and 9 out 
+//uncomment out the above import statements as we finish each component, as well as the actual components themselves rendered down below
 
 const App = () => {
   /**
@@ -27,23 +28,24 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(false);
   return <div className="app">
 
-    <Search setIsLoading={isLoading} setSearchResults={searchResults} />
+    {/* <Search setIsLoading={isLoading} setSearchResults={searchResults} />
     <Preview searchResults={searchResults} setIsLoading={isLoading} setSearchResults={searchResults} setFeaturedResult={featuredResult}/>
-    <Feature featuredResult={featuredResult} setIsLoading={isLoading} setSearchResults={searchResults} />
+    <Feature featuredResult={featuredResult} setIsLoading={isLoading} setSearchResults={searchResults} /> */}
     <Loading isLoading={isLoading} />
   
 
 
 
-{/*     {/* <Title /> is static, doesn't need any props */}
-    {/* <Title /> */}
-    {/* <Search /> needs props for setIsLoading and setSearchResults (trigger <Loading /> on search start/end, and transfer results to preview) */} 
+    {/* <Title /> is static, doesn't need any props*/
+     <Title /> 
+    /*{/* <Search /> needs props for setIsLoading and setSearchResults (trigger <Loading /> on search start/end, and transfer results to preview) */} 
     {/* <Search /> 
     {/* <Preview /> needs props for searchResults, setIsLoading and setSearchResults (clicking prev/next buttons), and setFeaturedResult (clicking a preview) */}
     {/* <Preview /> */}
     {/* <Feature /> needs props for featuredResult, as well as setIsLoading and setSearchResults (clicking on searchable properties) */}
     {/* <Feature /> */}
-    {/* <Loading /> is static, but should only render when isLoading is true */}
+    {/* <Loading />  */}
+    {/* is static, but should only render when isLoading is true */}
     {/* <Loading /> use a ternary and render null if isLoading is false */}
   
   </div>
