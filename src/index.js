@@ -37,15 +37,18 @@ const App = () => {
   const [ featuredResult, setFeaturedResult ] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  // console.log(setIsLoading);
  
   return (<div className="app">
 
     <Title /> 
     <Search 
 
-   
-    setIsLoading={isLoading} 
-    setSearchResults={searchResults}
+   /* 5/28 Kaleb: Bug fixed! I realized we were passing down boolean values instead of the actual functions. We were setting setIsLoading
+   and setSearchResults to the state and not the funciton that updates the state */
+
+    setIsLoading={setIsLoading} 
+    setSearchResults={setSearchResults}
      />
     {/* Commented out by Jack on 05/27/23 to prevent errors. Uncommented out when we finish these components
     <Preview searchResults={searchResults} setIsLoading={isLoading} setSearchResults={searchResults} setFeaturedResult={featuredResult}/>
@@ -54,7 +57,7 @@ const App = () => {
     
     {/* <Title /> is static, doesn't need any props*/
     /*{/* <Search /> needs props for setIsLoading and setSearchResults (trigger <Loading /> on search start/end, and transfer results to preview) */} 
-    {/* <Search /> 
+    {/* <Search />  
     {/* <Preview /> needs props for searchResults, setIsLoading and setSearchResults (clicking prev/next buttons), and setFeaturedResult (clicking a preview) */}
     {/* <Preview /> */}
     {/* <Feature /> needs props for featuredResult, as well as setIsLoading and setSearchResults (clicking on searchable properties) */}

@@ -20,6 +20,8 @@ const Search = (props) => {
   thinking problem is not here. */ 
   const {setIsLoading, setSearchResults} = props;
 
+  console.log(setIsLoading);
+
   const [centuryList, setCenturyList] = useState([]);
   const [classificationList, setClassificationList] = useState([]);
   const [queryString, setQueryString] = useState("");
