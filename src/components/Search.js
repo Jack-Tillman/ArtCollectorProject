@@ -16,6 +16,8 @@ const Search = (props) => {
 
   //05/27/23 - I think this is proper destructuring, but I am not 100% certain because of the error that 'setIsLoading' is not a function... 
 
+  /* 5/28 Kaleb: Tried some troubleshooting.. set this const to a literal function and is still not recognized as such
+  thinking problem is not here. */ 
   const {setIsLoading, setSearchResults} = props;
 
   const [centuryList, setCenturyList] = useState([]);
@@ -97,7 +99,7 @@ const Search = (props) => {
   return <form id="search" onSubmit={async (event) => {
     // write code here
     event.preventDefault();
-    setIsLoading(true);
+    setIsLoading(true);  /*Error here but this looks fine? All of the documentation I have seen has it declared the same */
 
     try{
       const response = await fetchQueryResults({ century, classification, queryString });

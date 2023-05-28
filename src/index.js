@@ -22,13 +22,28 @@ const App = () => {
    * isLoading, setIsLoading (default should be false)
    */
   
+  
+  /* 5/28 Kaleb: I think these are declared correctly. Search Results and isLoading are being used and funtioning...
+  setSearchResults, setFeaturedResult, and setIsLoading are "declared but value is never read" VSCode actually recognizes 
+  these are functions up until this point.
+  
+  If the problem is here this may be useful to troubleshoot;
+  What is not a function error in react?
+  The React. js "Uncaught TypeError: X is not a function" occurs when we try to call a value that is not a function
+  as a function, e.g. calling the props object instead of a function. To solve the error, console. log the value you
+  are calling and make sure it is a function.*/
+
   const [ searchResults, setSearchResults ] = useState({info:{}, records:[]});
   const [ featuredResult, setFeaturedResult ] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+
+ 
   return (<div className="app">
 
     <Title /> 
     <Search 
+
+   
     setIsLoading={isLoading} 
     setSearchResults={searchResults}
      />
