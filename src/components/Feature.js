@@ -30,7 +30,23 @@ import { fetchQueryResultsFromTermAndValue } from '../api';
  *  - call setIsLoading, set it to false
  */
 const Searchable = (props) => {
-  
+const [searchTerm, searchValue, setIsLoading, setSearchResults] = props;
+    
+    <span className="content">
+    <a href="#" onClick={async (event) => {
+        event.preventDefault;
+        setIsLoading(true);
+        try{
+            const result = fetchQueryResultsFromTermAndValue(searchTerm, searchValue);
+            setSearchResults(result)
+        } catch {
+            console.error(error);
+        } finally {
+            setIsLoading(false);
+        }
+
+    }}>SOME SEARCH TERM</a>
+   </span>
 }
 
 /**

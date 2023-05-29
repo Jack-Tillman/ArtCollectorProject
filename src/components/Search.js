@@ -104,8 +104,7 @@ const Search = (props) => {
     setIsLoading(true);  /*Error here but this looks fine? All of the documentation I have seen has it declared the same */
 
     try{
-      const response = await fetchQueryResults({ century, classification, queryString });
-      const queryResults = response.json();
+      const queryResults = await fetchQueryResults({ century, classification, queryString });
       setSearchResults(queryResults);
     } catch (error) {
       console.error(error);
