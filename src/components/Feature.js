@@ -84,6 +84,65 @@ const [searchTerm, searchValue, setIsLoading, setSearchResults] = props;
  * This component should be exported as default.
  */
 const Feature = (props) => {
+    const {featuredResult} = props;
+    const {title, dated, images, primaryimageurl, description, culture, style, 
+         technique, medium, dimensions, people, department, division, contact, creditline} = {featuredResult};
+        /* 5/28/23 Kaleb: Look at line 35 to 49 and replace all searchable items inside of the content span. Do some mapping over people and images.
+         */
+         return ( <main id="feature">{
+            {featuredResult} ? <div className="object-feature">
+            <header>
+              <h3>{title}</h3>
+               <h4>{dated}</h4>
+             </header>
+            <section className="facts">
+            { 
+            {culture} ? 
+            <>
+              <span className="title">Culture</span>
+               <span className="content">
+                <a href="">
+                Placeholder for Culture
+                </a>
+               </span>
+               </>
+               : null
+            }
+               <span className="title">Medium</span>
+               <span className="content"><a href="">Placeholder for Meduim</a></span>
+
+               <span className="title">{technique}</span>
+               <span className="content">FACT VALUE</span>
+
+               <span className="title">{dimensions}</span>
+               <span className="content">NEXT FACT VALUE</span>
+
+               <span className="title">{people}</span>
+               <span className="content">FACT VALUE</span>
+
+               <span className="title">{department}</span>
+               <span className="content">NEXT FACT VALUE</span>
+
+               <span className="title">{division}</span>
+               <span className="content">FACT VALUE</span>
+
+               <span className="title">{contact}</span>
+               <span className="content">NEXT FACT VALUE</span>
+
+               <span className="title">{creditline}</span>
+               <span className="content">FACT VALUE</span>
+
+             </section>
+             <section className="photos">
+               <img src={primaryimageurl} alt={description} />
+             </section>
+           </div> 
+         : null } 
+         </main>
+
+         )
+
+// if props = undefiend ? render main : 
 
 }
 

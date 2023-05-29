@@ -50,9 +50,9 @@ const App = () => {
     setIsLoading={setIsLoading} 
     setSearchResults={setSearchResults}
      />
-    {/* Commented out by Jack on 05/27/23 to prevent errors. Uncommented out when we finish these components
-    <Preview searchResults={searchResults} setIsLoading={isLoading} setSearchResults={searchResults} setFeaturedResult={featuredResult}/>
-    <Feature featuredResult={featuredResult} setIsLoading={isLoading} setSearchResults={searchResults} /> */}
+    {/* Commented out by Jack on 05/27/23 to prevent errors. Uncommented out when we finish these components*/}
+
+    <Feature featuredResult={featuredResult} setIsLoading={isLoading} setSearchResults={searchResults} /> 
 
     <Loading isLoading={isLoading} />
  
