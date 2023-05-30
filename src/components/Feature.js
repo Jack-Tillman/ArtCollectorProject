@@ -29,6 +29,8 @@ import { fetchQueryResultsFromTermAndValue } from '../api';
  * finally:
  *  - call setIsLoading, set it to false
  */
+
+//5/30 J - do we need to export Searchable? I figured not 'cuz it's used only by Feature but not sure
 const Searchable = (props) => {
 const [searchTerm, searchValue, setIsLoading, setSearchResults] = props;
     
@@ -38,13 +40,14 @@ const [searchTerm, searchValue, setIsLoading, setSearchResults] = props;
         setIsLoading(true);
         try{
             const result = fetchQueryResultsFromTermAndValue(searchTerm, searchValue);
-            setSearchResults(result)
+            setSearchResults(result);
         } catch {
+          //5/30 J - we could increase the specificity of this and other catch statements, such as console.error("Error fetching query results from search term and value. Full error: ", error)
             console.error(error);
         } finally {
             setIsLoading(false);
         }
-
+        //5/30 Jack - potentially change below to {searchTerm}
     }}>SOME SEARCH TERM</a>
    </span>
 }
@@ -90,7 +93,8 @@ const Feature = (props) => {
         /* 5/28/23 Kaleb: Look at line 35 to 49 and replace all searchable items inside of the content span. Do some mapping over people and images.
          */
          return ( <main id="feature">{
-            {featuredResult} ? <div className="object-feature">
+            {featuredResult} ? 
+            <div className="object-feature">
             <header>
               <h3>{title}</h3>
                <h4>{dated}</h4>
@@ -142,8 +146,19 @@ const Feature = (props) => {
 
          )
 
-// if props = undefiend ? render main : 
+//  (props === undefined) ? render main : 
 
 }
 
 export default Feature;
+
+// <li>
+// {
+//   someVariable < 38
+//   ? <React.Fragment>
+//       <span>Hi</span>
+//       <span>What</span>
+//     </React.Fragment>
+//   : null
+// }
+// </li>

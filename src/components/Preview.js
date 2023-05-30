@@ -103,7 +103,7 @@ const Preview = (props) => {
 
                   {/* // if the record.primaryimageurl exists, show this: <img src={ record.primaryimageurl } alt={ record.description } />, otherwise show nothing  */}
 
-                  {record.title ? (
+                  {(record.title) ? (
                     <h3>{record.title}</h3>
                   ) : (
                     <h3>MISSING INFO</h3>
