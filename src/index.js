@@ -34,10 +34,10 @@ const App = () => {
   are calling and make sure it is a function.*/
 
   const [ searchResults, setSearchResults ] = useState({info:{}, records:[]});
-  const [ featuredResult, setFeaturedResult ] = useState(null);
+  const [ featuredResult, setFeaturedResult ] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
-  // console.log(setIsLoading);
+
  
   return (<div className="app">
 
@@ -52,29 +52,18 @@ const App = () => {
      />
     {/* Commented out by Jack on 05/27/23 to prevent errors. Uncommented out when we finish these components*/}
 
-    <Feature featuredResult={featuredResult} setIsLoading={isLoading} setSearchResults={searchResults} /> 
-
-    <Loading isLoading={isLoading} />
- 
+    <Feature featuredResult={featuredResult} setIsLoading={setIsLoading} setSearchResults={setSearchResults} /> 
     <Preview
     searchResults={searchResults} 
     setIsLoading={setIsLoading}
     setSearchResults={setSearchResults} 
     setFeaturedResult={setFeaturedResult}
     />
-
-    {/* <Title /> is static, doesn't need any props*/
-    /*{/* <Search /> needs props for setIsLoading and setSearchResults (trigger <Loading /> on search start/end, and transfer results to preview) */} 
-    {/* <Search />
-    {/* <Preview /> needs props for searchResults, setIsLoading and setSearchResults (clicking prev/next buttons), and setFeaturedResult (clicking a preview) */}
-    
-    {/* <Feature /> needs props for featuredResult, as well as setIsLoading and setSearchResults (clicking on searchable properties) */}
-    {/* <Feature /> */}
-    {/* <Loading />  */}
-    {/* is static, but should only render when isLoading is true */}
-    {/* <Loading /> use a ternary and render null if isLoading is false */}
-
-  </div>)
+      {
+        isLoading ? <Loading /> : null
+      }
+  </div>
+  )
 }
 
 /**
@@ -82,8 +71,5 @@ const App = () => {
  * using ReactDOM.render();
  */
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('app')
-  );
+ReactDOM.render( <App />,document.getElementById('app'));
 

@@ -10,7 +10,7 @@ import {
   fetchQueryResults
 } from '../api';
 
-const Search = (props) => {
+const Search = ({setIsLoading, setSearchResults}) => {
   // Make sure to destructure setIsLoading and setSearchResults from the props
   // const [inputValue, setInputValue] = useState();
 
@@ -18,7 +18,6 @@ const Search = (props) => {
 
   /* 5/28 Kaleb: Tried some troubleshooting.. set this const to a literal function and is still not recognized as such
   thinking problem is not here. */ 
-  const {setIsLoading, setSearchResults} = props;
 
   // console.log(setIsLoading);
 
@@ -55,13 +54,11 @@ const Search = (props) => {
       fetchAllClassifications()
     ])
     //resCenturies is the returned list of centuries, resClassifications is returned list of classifications from above 
-    .then(([resCenturies, resClassifications]) => {
-      setCenturyList(resCenturies);
-      setClassificationList(resClassifications)
+    .then(([centuries, classifications]) => {
+      setCenturyList(centuries);
+      setClassificationList(classifications)
     })
-    .catch((error) => {
-      console.error(error)
-    })
+    .catch(console.error);
   }, []);
 
   /**
@@ -98,18 +95,19 @@ const Search = (props) => {
 
 
   */
-  return <form id="search" onSubmit={async (event) => {
+  return(
+  <form id="search" onSubmit={async (event) => {
     // write code here
     event.preventDefault();
-    setIsLoading(true);  /*Error here but this looks fine? All of the documentation I have seen has it declared the same */
+    setIsLoading(true);  
 
     try{
-      const queryResults = await fetchQueryResults({ century, classification, queryString });
+      let queryResults = await fetchQueryResults({ century, classification, queryString });
       setSearchResults(queryResults);
     } catch (error) {
       console.error(error);
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
 
   }}>
@@ -121,8 +119,9 @@ const Search = (props) => {
         placeholder="enter keywords..." 
          value={queryString} 
         onChange={(e) => setQueryString(e.target.value)}
-        />
+      />
     </fieldset>
+
     <fieldset>
       <label htmlFor="select-classification">Classification <span className="classification-count">({ classificationList.length })</span></label>
       <select 
@@ -130,16 +129,18 @@ const Search = (props) => {
         id="select-classification"
         value={classification} 
         onChange={(e) => setClassification(e.target.value)}
-        >
+      >
         <option value="any">Any</option>
-        {/* map over the classificationList, return an <option /> */
-        /*if there are any issues with this, on line 133, include other properties from https://github.com/harvardartmuseums/api-docs/blob/master/sections/classification.md */
-         classificationList.map(option => {
-          return <option key={option.id} value={option.id}>{option.name}</option>
-        })}
-       
+        {
+         classificationList.map((classification, index) => {
+          return (
+            <option key={`${index}classifications`} value={classification.name}>{classification.name}</option>
+          ) 
+        })
+      }
       </select>
     </fieldset>
+
     <fieldset>
       <label htmlFor="select-century">Century <span className="century-count">({ centuryList.length })</span></label>
       <select 
@@ -149,24 +150,19 @@ const Search = (props) => {
         onChange={(e) => setCentury(e.target.value)}
         >
         <option value="any">Any</option>
-        {/* map over the centuryList, return an <option /> 
-        if there are any issues with this, on line 151, include other properties from https://github.com/harvardartmuseums/api-docs/blob/master/sections/century.md */
-        centuryList.map(option => {
+        {
+        centuryList.map((century, index) => {
           return (
-            <option key={option.id} value={option.id}>{option.name}</option>
+            <option key={`${index}centuries`} value={century.name}>{century.name}</option>
           )
-        })}
-        
+        })
+      }
       </select>
      </fieldset>
+     
     <button>SEARCH</button>
   </form>
+  )
 }
 
 export default Search;
-
-
-
-/*
-
-*/

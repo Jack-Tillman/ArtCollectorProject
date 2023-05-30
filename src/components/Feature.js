@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 
 // Don't touch this import
 import { fetchQueryResultsFromTermAndValue } from '../api';
@@ -31,134 +31,189 @@ import { fetchQueryResultsFromTermAndValue } from '../api';
  */
 
 //5/30 J - do we need to export Searchable? I figured not 'cuz it's used only by Feature but not sure
-const Searchable = (props) => {
-const [searchTerm, searchValue, setIsLoading, setSearchResults] = props;
-    
+
+
+const Searchable = ({searchTerm, searchValue, setIsLoading, setSearchResults}) => {
+  return (
     <span className="content">
-    <a href="#" onClick={async (event) => {
-        event.preventDefault;
-        setIsLoading(true);
-        try{
-            const result = fetchQueryResultsFromTermAndValue(searchTerm, searchValue);
-            setSearchResults(result);
-        } catch {
-          //5/30 J - we could increase the specificity of this and other catch statements, such as console.error("Error fetching query results from search term and value. Full error: ", error)
-            console.error(error);
-        } finally {
+      <a
+        href="#"
+        onClick={async (e) => {
+          e.preventDefault()
+          setIsLoading(true);
+          try {
+            let results = await fetchQueryResultsFromTermAndValue(searchTerm, searchValue)
+            setSearchResults(results);
+          } catch (error) {
+            //5/30 J - we could increase the specificity of this and other catch statements, such as console.error("Error fetching query results from search term and value. Full error: ", error)
+            console.error(error.message);
+          } finally {
             setIsLoading(false);
-        }
-        //5/30 Jack - potentially change below to {searchTerm}
-    }}>SOME SEARCH TERM</a>
-   </span>
-}
+          }
+        }}>
+          {searchValue}
+          </a>
+    </span>
+  )
+};
 
-/**
- * We need a new component called Feature which looks like this when no featuredResult is passed in as a prop:
- * 
- * <main id="feature"></main>
- * 
- * And like this when one is:
- * 
- * <main id="feature">
- *   <div className="object-feature">
- *     <header>
- *       <h3>OBJECT TITLE</h3>
- *       <h4>WHEN IT IS DATED</h4>
- *     </header>
- *     <section className="facts">
- *       <span className="title">FACT NAME</span>
- *       <span className="content">FACT VALUE</span>
- *       <span className="title">NEXT FACT NAME</span>
- *       <span className="content">NEXT FACT VALUE</span>
- *     </section>
- *     <section className="photos">
- *       <img src=IMAGE_URL alt=SOMETHING_WORTHWHILE />
- *     </section>
- *   </div>
- * </main>
- * 
- * The different facts look like this: title, dated, images, primaryimageurl, description, culture, style, 
- * technique, medium, dimensions, people, department, division, contact, creditline
- * 
- * The <Searchable /> ones are: culture, technique, medium (first toLowerCase it), and person.displayname (one for each PEOPLE)
- * 
- * NOTE: people and images are likely to be arrays, and will need to be mapped over if they exist
- * 
- * This component should be exported as default.
- */
-const Feature = (props) => {
-    const {featuredResult} = props;
-    const {title, dated, images, primaryimageurl, description, culture, style, 
-         technique, medium, dimensions, people, department, division, contact, creditline} = {featuredResult};
-        /* 5/28/23 Kaleb: Look at line 35 to 49 and replace all searchable items inside of the content span. Do some mapping over people and images.
-         */
-         return ( <main id="feature">{
-            {featuredResult} ? 
-            <div className="object-feature">
-            <header>
-              <h3>{title}</h3>
-               <h4>{dated}</h4>
-             </header>
-            <section className="facts">
-            { 
-            {culture} ? 
-            <>
-              <span className="title">Culture</span>
-               <span className="content">
-                <a href="">
-                Placeholder for Culture
-                </a>
-               </span>
-               </>
-               : null
+
+const Feature = ({ featuredResult, setIsLoading, setSearchResults }) => {
+  const id = featuredResult.id;
+  const title = featuredResult.title;
+  const dated = featuredResult.dated;
+  const images = featuredResult.images;
+  const primaryimageurl = featuredResult.primaryimageurl;
+  const description = featuredResult.description;
+  const culture = featuredResult.culture;
+  const style = featuredResult.style;
+  const technique = featuredResult.technique;
+  const medium = featuredResult.medium;
+  const dimensions = featuredResult.dimensions;
+  const people = featuredResult.people;
+  const department = featuredResult.department;
+  const division = featuredResult.division;
+  const contact = featuredResult.contact;
+  const creditline = featuredResult.creditline;
+
+  return (
+    <>
+    {
+      (!id) ? 
+        (<main id="feature" />)
+      : (
+      <main id="feature">
+        <div className="object-feature">
+          <header>
+            <h3>{title}</h3>
+            <h4>{dated}</h4>
+          </header>
+          <section className="facts">
+            {
+            culture ? 
+              <>
+                <span className="title">Culture</span>
+                <Searchable
+                  searchTerm="culture"
+                  searchValue={culture}
+                  setIsLoading={setIsLoading}
+                  setSearchResults={setSearchResults}
+                />
+              </>
+             : null
             }
-               <span className="title">Medium</span>
-               <span className="content"><a href="">Placeholder for Meduim</a></span>
+            {
+            medium ? 
+              <>
+                <span className="title">Medium</span> 
+                    <Searchable
+                      searchTerm="medium"
+                      searchValue={medium.toLowerCase()}
+                      setIsLoading={setIsLoading}
+                      setSearchResults={setSearchResults}
+                    />
+              </>
+             : null
+            }
+            {
+              style ?
+                <>
+                  <span className="title">Style</span>
+                  <span className="content">{style}</span>
+                </>
+              : null
+            }
+            {
+            technique ? 
+              <>
+                <span className="title">Technique</span>
+                <Searchable
+                  searchTerm="technique"
+                  searchValue={technique}
+                  setIsLoading={setIsLoading}
+                  setSearchResults={setSearchResults}
+                />
+              </>
+            : null
+            }
 
-               <span className="title">{technique}</span>
-               <span className="content">FACT VALUE</span>
-
-               <span className="title">{dimensions}</span>
-               <span className="content">NEXT FACT VALUE</span>
-
-               <span className="title">{people}</span>
-               <span className="content">FACT VALUE</span>
-
-               <span className="title">{department}</span>
-               <span className="content">NEXT FACT VALUE</span>
-
-               <span className="title">{division}</span>
-               <span className="content">FACT VALUE</span>
-
-               <span className="title">{contact}</span>
-               <span className="content">NEXT FACT VALUE</span>
-
-               <span className="title">{creditline}</span>
-               <span className="content">FACT VALUE</span>
-
-             </section>
-             <section className="photos">
-               <img src={primaryimageurl} alt={description} />
-             </section>
-           </div> 
-         : null } 
-         </main>
-
-         )
-
-//  (props === undefined) ? render main : 
-
+            {dimensions ? (
+              <>
+                <span className="title">Dimensions</span>
+                <span className="content">{ dimensions}</span>
+              </>
+            ) : null
+            }
+            {
+               people ? 
+                people.map((person, index) => {
+                  return(
+                    <React.Fragment key={`people${index}`}>
+                      <span className="title">Person</span>
+                      <Searchable searchTerm="person" searchValue={person.displayname} setIsLoading={setIsLoading} setSearchResults={setSearchResults} />
+                    </React.Fragment>
+                  )
+                })
+              : null
+            }
+            { 
+              description ? 
+                <>
+                  <span className="title">Description</span>
+                  <span className="content"> { description }</span>
+                </>
+              : null
+            }
+            { 
+              department ? 
+                <>
+                  <span className="title">Department</span>
+                  <span className="content">{ department }</span>
+                </>
+              : null
+            }
+            { 
+              division ? (
+               <>
+                <span className="title">Division</span>
+                <span className="content">{ division}</span>
+              </>
+            ) : null
+            }
+            { 
+              contact ? (
+              <>
+                <span className="title">Contact</span>
+                <span className="content">{contact}</span>
+              </>
+              ) : null}
+            { 
+              creditline ? (
+                <>
+                  <span className="title">Credit</span>
+                  <span className="content">{ creditline}</span>
+                </>
+              ) : null
+              }
+          </section>
+          <section className="photos">
+            {
+              images ?
+              images.map((image, index) => {
+                return(
+                  <img key={`images${index}`} src={image.baseimageurl} alt={image.description} />
+                ) 
+                })
+              : null
+              }
+          </section>
+        </div>
+    </main>
+      )
+    }
+    </>
+  )
 }
-
-export default Feature;
-
-// <li>
-// {
-//   someVariable < 38
-//   ? <React.Fragment>
-//       <span>Hi</span>
-//       <span>What</span>
-//     </React.Fragment>
-//   : null
-// }
-// </li>
+        
+export default Feature;      
+     
