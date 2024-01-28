@@ -1,8 +1,3 @@
-/**
- * This file features and exports all of your calls to the API
- * 
- * You need to replace YOUR_API_KEY in the string associated with KEY with your actual API key
- */
 export const BASE_URL = 'https://api.harvardartmuseums.org';
 export const KEY = 'apikey=404c94a8-40ab-4dd6-91be-c7ff32d3cfac';
 

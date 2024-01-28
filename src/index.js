@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
-
 import { Feature, Loading, Preview, Search, Title } from "./components";
 
 const App = () => {
